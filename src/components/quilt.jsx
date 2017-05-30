@@ -23,7 +23,7 @@ class Quilt extends React.Component {
     const v = voronoi();
 
     const triangles = v(_.sortBy(data, d => d[0] * d[1])).triangles();
-    this.colors = chroma.scale(['hotpink', 'cornflowerblue']).colors(10);
+    this.colors = chroma.scale(['hotpink', 'black']).colors(10);
 
     this.state = {
       points: props.points,
@@ -35,7 +35,7 @@ class Quilt extends React.Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { height, points, width } = this.props;
+    const { divisions, height, points, width } = this.props;
     const { triangles } = this.state;
     const dimensions = {
       width,
@@ -48,7 +48,7 @@ class Quilt extends React.Component {
     const colors = this.colors;
     return (
       <svg className='quilt' {...dimensions} {...styles}>
-        {triangles.map((t, i) => <Patch delay={i * (ANIM_DURATION / triangles.length)} width={width} height={height} key={i} vertices={t} color={colors[i % 10]} />)}
+        {triangles.map((t, i) => <Patch delay={i * (ANIM_DURATION / triangles.length)} width={width} height={height} key={i} divisions={divisions} vertices={t} color={colors[i % 10]} />)}
       </svg>
     );
   }

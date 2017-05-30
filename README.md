@@ -2,7 +2,9 @@
 
 Playing with triangles and whatnot.
 
-![Geometry](https://i.imgur.com/KzjF0mG.png)
+A few hours with SVG, D3 Voronoi, and GSAP.
+
+![Geometry](https://i.imgur.com/TPKh67x.jpg)
 
 ## Useful Commands
 

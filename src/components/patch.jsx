@@ -51,13 +51,12 @@ class Patch extends React.Component {
    */
   render() {
     const { a, b, c, mid, distance } = this.state;
-    const { color, fill } = this.props;
+    const { color, divisions, fill } = this.props;
 
     const origin = `M ${a[0]} ${a[1]}`;
-    const lines = 24;
 
-    const midPoints = _.times(lines - 2, i => {
-      const perc = (i / (lines - 2));
+    const midPoints = _.times(divisions - 2, i => {
+      const perc = (i / (divisions - 2));
       const p = getMidPoint(b, c, perc);
       return `${origin} L ${p[0]} ${p[1]}`;
     });
@@ -67,11 +66,12 @@ class Patch extends React.Component {
       ${midPoints.join(' ')}
       ${origin}
       L ${c[0]} ${c[1]}
-      L ${b[0]} ${b[1]}`;
+      L ${b[0]} ${b[1]}
+      Z`;
 
     return (
       <g className='patch' transform='translate(0,0)'>
-        <path stroke={color} fill='none' clipPath={`url(#${this._id})`} d={pathData} />
+        <path stroke={color} fill={'none'} clipPath={`url(#${this._id})`} d={pathData} />
         <circle cx={a[0]} cy={a[1]} r={distance * 0.2} fill={color} opacity={0} />
         <clipPath id={this._id}>
           <circle ref={_clipPath => { this.clipPath = _clipPath; }} cx={a[0]} cy={a[1]} r={0} fill='black' />
