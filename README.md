@@ -2,6 +2,8 @@
 
 Playing with triangles and whatnot.
 
+![Geometry](https://i.imgur.com/KzjF0mG.png)
+
 ## Useful Commands
 
 - `npm i` to install dependencies

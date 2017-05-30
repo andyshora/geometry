@@ -6,6 +6,8 @@ import { voronoi } from 'd3';
 import chroma from 'chroma-js';
 import Patch from './patch';
 
+let ANIM_DURATION = 5;
+
 /**
  * Description
  */
@@ -13,13 +15,15 @@ class Quilt extends React.Component {
   constructor(props) {
     super(props);
 
-    const data = _.range(1, props.points + 1)
-      .map(d => [_.random(0, 1, true), _.random(0, 1, true)]);
+    const data = _.range(0, 1, 1 / props.points)
+      .map((d, i) => {
+        return [_.random(0, 1, true) * props.width, _.random(0, 1, true) * props.height];
+      });
 
     const v = voronoi();
 
-    const triangles = v(data).triangles();
-    this.colors = chroma.scale(['white', 'red']).colors(10);
+    const triangles = v(_.sortBy(data, d => d[0] * d[1])).triangles();
+    this.colors = chroma.scale(['hotpink', 'cornflowerblue']).colors(10);
 
     this.state = {
       points: props.points,
@@ -44,7 +48,7 @@ class Quilt extends React.Component {
     const colors = this.colors;
     return (
       <svg className='quilt' {...dimensions} {...styles}>
-        {triangles.map((t, i) => <Patch width={width} height={height} key={i} vertices={t} color={colors[i % 10]} />)}
+        {triangles.map((t, i) => <Patch delay={i * (ANIM_DURATION / triangles.length)} width={width} height={height} key={i} vertices={t} color={colors[i % 10]} />)}
       </svg>
     );
   }
