@@ -3,6 +3,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import { voronoi } from 'd3';
+import chroma from 'chroma-js';
 import Patch from './patch';
 
 /**
@@ -18,7 +19,7 @@ class Quilt extends React.Component {
     const v = voronoi();
 
     const triangles = v(data).triangles();
-    console.log(data, triangles);
+    this.colors = chroma.scale(['white', 'red']).colors(10);
 
     this.state = {
       points: props.points,
@@ -38,12 +39,12 @@ class Quilt extends React.Component {
     };
     const styles = {
       style: {
-        background: 'hotpink'
       }
     };
+    const colors = this.colors;
     return (
       <svg className='quilt' {...dimensions} {...styles}>
-        {triangles.map((t, i) => <Patch width={width} height={height} key={i} vertices={t} />)}
+        {triangles.map((t, i) => <Patch width={width} height={height} key={i} vertices={t} color={colors[i % 10]} />)}
       </svg>
     );
   }

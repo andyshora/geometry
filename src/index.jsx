@@ -6,6 +6,6 @@ import './styles/index.css';
 /**
  * Our main application
  */
-const App = () => <div><Quilt width={500} height={500} points={120} /></div>;
+const App = () => <div><Quilt width={1000} height={500} points={24} /></div>;
 
 ReactDOM.render(<App />, document.getElementById('root'));
