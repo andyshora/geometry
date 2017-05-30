@@ -9,20 +9,23 @@ import Patch from './patch';
 let ANIM_DURATION = 5;
 
 /**
+ * Get the distance between two points
+ * @type {number}
+ */
+const getDistance = (a, b) => {
+  return Math.hypot(b[0] - a[0], b[1] - a[1]);
+};
+
+/**
  * Description
  */
 class Quilt extends React.Component {
   constructor(props) {
     super(props);
 
-    const data = _.range(0, 1, 1 / props.points)
-      .map((d, i) => {
-        return [_.random(0, 1, true) * props.width, _.random(0, 1, true) * props.height];
-      });
-
     const v = voronoi();
 
-    const triangles = v(_.sortBy(data, d => d[0] * d[1])).triangles();
+    const triangles = v(_.sortBy(props.points, d => d[0] * d[1])).triangles();
     this.colors = chroma.scale(['hotpink', 'black']).colors(10);
 
     this.state = {
@@ -48,7 +51,21 @@ class Quilt extends React.Component {
     const colors = this.colors;
     return (
       <svg className='quilt' {...dimensions} {...styles}>
-        {triangles.map((t, i) => <Patch delay={i * (ANIM_DURATION / triangles.length)} width={width} height={height} key={i} divisions={divisions} vertices={t} color={colors[i % 10]} />)}
+        {triangles.map((t, i) => {
+          const colorIndex = Math.max(getDistance(t[0], t[1]), getDistance(t[0], t[2])) < height * 0.1
+            ? _.random(0, 7)
+            : _.random(6, 8);
+          return (
+            <Patch
+              delay={i * (ANIM_DURATION / triangles.length)}
+              width={width}
+              height={height}
+              key={i}
+              divisions={divisions}
+              vertices={t}
+              color={colors[colorIndex]} />
+          );
+        })}
       </svg>
     );
   }
