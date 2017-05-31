@@ -37,7 +37,7 @@ class App extends React.Component {
       const step = width / noise.length;
       this.setState({
         linePoints: _.flattenDepth(_.range(0, width, step)
-          .map((d, i) => [[d, noise[i] * height], [d, (noise[i] - 0.05) * height]])
+          .map((d, i) => [[d, noise[i] * height], [d + (0.05 * height), (noise[i] - 0.05) * height]])
         , 1)
       });
     }).catch(function(ex) {
