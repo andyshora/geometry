@@ -8,12 +8,33 @@ import Patch from './patch';
 
 let ANIM_DURATION = 5;
 
+const COLORS = [
+  'HOTPINK',
+  'AQUAMARINE',
+  'GOLD',
+  'CORAL',
+  'POWDERBLUE',
+  'BLUEVIOLET',
+  'PALEGREEN',
+  'DARKORANGE',
+  'MEDIUMSPRINGGREEN',
+  'ORANGERED',
+  'CYAN',
+  'CRIMSON',
+  'MEDIUMVIOLETRED'
+];
+
 /**
  * Get the distance between two points
  * @type {number}
  */
 const getDistance = (a, b) => {
   return Math.hypot(b[0] - a[0], b[1] - a[1]);
+};
+
+const getColor = () => {
+  const index = _.random(0, COLORS.length - 1);
+  return COLORS[index];
 };
 
 /**
@@ -26,7 +47,7 @@ class Quilt extends React.Component {
     const v = voronoi();
 
     const triangles = v(_.sortBy(props.points, d => d[0] * d[1])).triangles();
-    this.colors = chroma.scale(['hotpink', 'black']).colors(10);
+    this.colors = chroma.scale([getColor(), 'black']).colors(10);
 
     this.state = {
       points: props.points,
