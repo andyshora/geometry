@@ -50,11 +50,14 @@ class App extends React.Component {
     const points = _.range(0, 1, 1 / 100)
       .map(d =>  [_.random(0, 1, true) * width, _.random(0, 1, true) * height]);
 
+    // <Quilt width={width} height={height} points={points} divisions={18} />
+    // <Quilt width={width} height={height} points={points} divisions={36} />
+    // { linePoints && <Quilt width={width} height={height} points={linePoints} divisions={5} /> }
+    // { linePoints && <Quilt width={width} height={height} points={linePoints} divisions={12} /> }
     if (width) {
       return (
         <div className='app'>
-          <Quilt width={width} height={height} points={points} divisions={18} />
-          { linePoints && <Quilt width={width} height={height} points={linePoints} divisions={5} /> }
+          <Quilt width={width} height={height} points={points} divisions={12} />
         </div>
       );
     } else {

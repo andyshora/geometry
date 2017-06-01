@@ -74,8 +74,8 @@ class Quilt extends React.Component {
       <svg className='quilt' {...dimensions} {...styles}>
         {triangles.map((t, i) => {
           const colorIndex = Math.max(getDistance(t[0], t[1]), getDistance(t[0], t[2])) < height * 0.1
-            ? _.random(0, 7)
-            : _.random(6, 8);
+            ? _.random(0, 5)
+            : _.random(5, 8);
           return (
             <Patch
               delay={i * (ANIM_DURATION / triangles.length)}
